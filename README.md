@@ -22,7 +22,7 @@ module "deploy" {
       internal_port = "8090"
     }
   ]
-  
+
   readiness_probe = {
     http_get = {
       path   = "/health"
@@ -87,3 +87,89 @@ module "deploy" {
 |------|:-----------:|
 | name | Name of the deployment |
 | namespace | Namespace in which created the deployment |
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+## Requirements
+
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.14.8 |
+| <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | >= 2.1.0 |
+
+## Providers
+
+| Name | Version |
+|------|---------|
+| <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | 2.11.0 |
+
+## Modules
+
+No modules.
+
+## Resources
+
+| Name | Type |
+|------|------|
+| [kubernetes_deployment.deploy_app](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/deployment) | resource |
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_args"></a> [args](#input\_args) | (Optional) Arguments to the entrypoint | `list(string)` | `[]` | no |
+| <a name="input_cluster_ca_certificate"></a> [cluster\_ca\_certificate](#input\_cluster\_ca\_certificate) | The root certificates bundle for TLS authentication | `string` | `""` | no |
+| <a name="input_cluster_endpoint"></a> [cluster\_endpoint](#input\_cluster\_endpoint) | The hostname (in form of URI) of the Kubernetes API | `string` | `""` | no |
+| <a name="input_cluster_token"></a> [cluster\_token](#input\_cluster\_token) | Token of the cluster to authen | `string` | `""` | no |
+| <a name="input_command"></a> [command](#input\_command) | (Optional) Entrypoint array. Not executed within a shell | `list(string)` | `[]` | no |
+| <a name="input_custom_labels"></a> [custom\_labels](#input\_custom\_labels) | (Optional) Add custom label to pods | `map(string)` | `null` | no |
+| <a name="input_deployment_annotations"></a> [deployment\_annotations](#input\_deployment\_annotations) | Annotations for deployment | `map(string)` | `null` | no |
+| <a name="input_env"></a> [env](#input\_env) | (Optional) Name and value pairs to set in the container's environment | `map(string)` | `{}` | no |
+| <a name="input_env_field"></a> [env\_field](#input\_env\_field) | (Optional) Get field from k8s and add as environment variables to pods | `map(string)` | `{}` | no |
+| <a name="input_env_secret"></a> [env\_secret](#input\_env\_secret) | (Optional) Get secret keys from k8s and add as environment variables to pods | `map` | `{}` | no |
+| <a name="input_exec_plugins"></a> [exec\_plugins](#input\_exec\_plugins) | The Configuration block to use an exec-based credential plugin | `map(any)` | `{}` | no |
+| <a name="input_hosts"></a> [hosts](#input\_hosts) | (Optional) Add /etc/hosts records to pods | `list(object({ hostname = list(string), ip = string }))` | `[]` | no |
+| <a name="input_image"></a> [image](#input\_image) | (Required) Docker image name | `string` | n/a | yes |
+| <a name="input_image_pull_policy"></a> [image\_pull\_policy](#input\_image\_pull\_policy) | One of Always, Never, IfNotPresent | `string` | `"IfNotPresent"` | no |
+| <a name="input_image_pull_secrets"></a> [image\_pull\_secrets](#input\_image\_pull\_secrets) | (Optional) Specify list of pull secrets | `map(string)` | `null` | no |
+| <a name="input_internal_port"></a> [internal\_port](#input\_internal\_port) | (Optional) List of ports to expose from the container | `list` | `[]` | no |
+| <a name="input_kubectl_config_context_name"></a> [kubectl\_config\_context\_name](#input\_kubectl\_config\_context\_name) | The config context to use when authenticating to the Kubernetes cluster. If empty, defaults to the current context specified in the kubeconfig file. | `string` | `""` | no |
+| <a name="input_kubectl_config_path"></a> [kubectl\_config\_path](#input\_kubectl\_config\_path) | The path to the config file to use for kubectl. If empty, defaults to $HOME/.kube/config | `string` | `""` | no |
+| <a name="input_lifecycle_events"></a> [lifecycle\_events](#input\_lifecycle\_events) | (Optional) Actions that the management system should take in response to container lifecycle events | `list` | `[]` | no |
+| <a name="input_liveness_probe"></a> [liveness\_probe](#input\_liveness\_probe) | (Optional) Periodic probe of container liveness. Container will be restarted if the probe fails. Cannot be updated. | `list` | `[]` | no |
+| <a name="input_min_ready_seconds"></a> [min\_ready\_seconds](#input\_min\_ready\_seconds) | (Optional) Field that specifies the minimum number of seconds for which a newly created Pod should be ready without any of its containers crashing, for it to be considered available | `number` | `null` | no |
+| <a name="input_name"></a> [name](#input\_name) | (Required) Name of the deployment | `string` | n/a | yes |
+| <a name="input_namespace"></a> [namespace](#input\_namespace) | (Optional) Namespace in which to create the deployment | `string` | `"default"` | no |
+| <a name="input_node_selector"></a> [node\_selector](#input\_node\_selector) | (Optional) Specify node selector for pod | `map(string)` | `null` | no |
+| <a name="input_prevent_deploy_on_the_same_node"></a> [prevent\_deploy\_on\_the\_same\_node](#input\_prevent\_deploy\_on\_the\_same\_node) | Pod pod\_anti\_affinity rule, which prevents deploy same pod on one node. | `bool` | `false` | no |
+| <a name="input_readiness_probe"></a> [readiness\_probe](#input\_readiness\_probe) | (Optional) Periodic probe of container service readiness. Container will be removed from service endpoints if the probe fails. Cannot be updated. | `list` | `[]` | no |
+| <a name="input_replicas"></a> [replicas](#input\_replicas) | (Optional) Count of pods | `number` | `1` | no |
+| <a name="input_resources"></a> [resources](#input\_resources) | (Optional) Compute Resources required by this container. CPU/RAM requests/limits | `map` | `{}` | no |
+| <a name="input_restart_policy"></a> [restart\_policy](#input\_restart\_policy) | Restart policy for all containers within the pod. One of Always, OnFailure, Never | `string` | `"Always"` | no |
+| <a name="input_rolling_update"></a> [rolling\_update](#input\_rolling\_update) | Rolling update config params. Present only if strategy\_update = RollingUpdate | `list` | `[]` | no |
+| <a name="input_security_context"></a> [security\_context](#input\_security\_context) | (Optional) SecurityContext holds pod-level security attributes and common container settings | `list` | `[]` | no |
+| <a name="input_security_context_capabilities"></a> [security\_context\_capabilities](#input\_security\_context\_capabilities) | (Optional) Security context in pod. Only capabilities. | `list` | `[]` | no |
+| <a name="input_security_context_container"></a> [security\_context\_container](#input\_security\_context\_container) | (Optional) Security context in pod. | `list` | `[]` | no |
+| <a name="input_service_account_name"></a> [service\_account\_name](#input\_service\_account\_name) | (Optional) Is the name of the ServiceAccount to use to run this pod | `string` | `null` | no |
+| <a name="input_service_account_token"></a> [service\_account\_token](#input\_service\_account\_token) | Indicates whether a service account token should be automatically mounted | `bool` | `null` | no |
+| <a name="input_strategy_update"></a> [strategy\_update](#input\_strategy\_update) | (Optional) Type of deployment. Can be 'Recreate' or 'RollingUpdate' | `string` | `"RollingUpdate"` | no |
+| <a name="input_template_annotations"></a> [template\_annotations](#input\_template\_annotations) | Annotations for pod (template) | `map(string)` | `null` | no |
+| <a name="input_termination_grace_period_seconds"></a> [termination\_grace\_period\_seconds](#input\_termination\_grace\_period\_seconds) | Duration in seconds the pod needs to terminate gracefully | `number` | `null` | no |
+| <a name="input_toleration"></a> [toleration](#input\_toleration) | (Optional) Pod node tolerations | `list` | `[]` | no |
+| <a name="input_tty"></a> [tty](#input\_tty) | Whether this container should allocate a TTY for itself | `bool` | `true` | no |
+| <a name="input_volume_aws_disk"></a> [volume\_aws\_disk](#input\_volume\_aws\_disk) | (Optional) Represents an AWS Disk resource that is attached to a kubelet's host machine and then exposed to the pod | `list` | `[]` | no |
+| <a name="input_volume_claim"></a> [volume\_claim](#input\_volume\_claim) | (Optional) Represents an Persistent volume Claim resource that is attached to a kubelet's host machine and then exposed to the pod | `list` | `[]` | no |
+| <a name="input_volume_config_map"></a> [volume\_config\_map](#input\_volume\_config\_map) | (Optional) The data stored in a ConfigMap object can be referenced in a volume of type configMap and then consumed by containerized applications running in a Pod | `list(object({ mode = string, name = string, volume_name = string }))` | `[]` | no |
+| <a name="input_volume_empty_dir"></a> [volume\_empty\_dir](#input\_volume\_empty\_dir) | n/a | `list(object({ volume_name = string }))` | `[]` | no |
+| <a name="input_volume_gce_disk"></a> [volume\_gce\_disk](#input\_volume\_gce\_disk) | (Optional) Represents an GCE Disk resource that is attached to a kubelet's host machine and then exposed to the pod | `list` | `[]` | no |
+| <a name="input_volume_host_path"></a> [volume\_host\_path](#input\_volume\_host\_path) | (Optional) Represents a directory from node on the host | `list` | `[]` | no |
+| <a name="input_volume_mount"></a> [volume\_mount](#input\_volume\_mount) | (Optional) Mount path from pods to volume | `list` | `[]` | no |
+| <a name="input_volume_nfs"></a> [volume\_nfs](#input\_volume\_nfs) | (Optional) Represents an NFS mounts on the host | `list(object({ path_on_nfs = string, nfs_endpoint = string, volume_name = string }))` | `[]` | no |
+| <a name="input_volume_secret"></a> [volume\_secret](#input\_volume\_secret) | (Optional) Create volume from secret | `list` | `[]` | no |
+| <a name="input_wait_for_rollout"></a> [wait\_for\_rollout](#input\_wait\_for\_rollout) | n/a | `bool` | `true` | no |
+
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| <a name="output_name"></a> [name](#output\_name) | n/a |
+| <a name="output_namespace"></a> [namespace](#output\_namespace) | n/a |
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

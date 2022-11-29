@@ -1,3 +1,41 @@
+# For provider:
+variable "cluster_token" {
+  description = "Token of the cluster to authen"
+  type        = string
+  default     = ""
+}
+
+variable "kubectl_config_context_name" {
+  description = "The config context to use when authenticating to the Kubernetes cluster. If empty, defaults to the current context specified in the kubeconfig file."
+  type        = string
+  default     = ""
+}
+
+variable "kubectl_config_path" {
+  description = "The path to the config file to use for kubectl. If empty, defaults to $HOME/.kube/config"
+  type        = string
+  default     = ""
+}
+
+variable "cluster_endpoint" {
+  description = "The hostname (in form of URI) of the Kubernetes API"
+  type        = string
+  default     = ""
+}
+
+variable "cluster_ca_certificate" {
+  description = "The root certificates bundle for TLS authentication"
+  type        = string
+  default     = ""
+}
+
+variable "exec_plugins" {
+  description = "The Configuration block to use an exec-based credential plugin"
+  type        = map(any)
+  default     = {}
+}
+
+# For deployment:
 variable "name" {
   type        = string
   description = "(Required) Name of the deployment"

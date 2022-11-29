@@ -1,3 +1,24 @@
+provider "kubernetes" {
+  # file config:
+  config_context = var.kubectl_config_path == "" ? null : var.kubectl_config_context_name
+  config_path    = var.kubectl_config_path == "" ? null : var.kubectl_config_path
+
+  # credentials config:
+  host                   = var.kubectl_config_path == "" ? var.cluster_endpoint : null
+  token                  = var.kubectl_config_path == "" ? var.cluster_token : null
+  cluster_ca_certificate = var.kubectl_config_path == "" ? base64decode(var.cluster_ca_certificate) : null
+
+  # exec plugins:
+  dynamic "exec" {
+    for_each = var.kubectl_config_path == "" && var.cluster_token == "" ? var.exec_plugins : {}
+    content {
+      api_version = exec.value.api_version
+      args        = exec.value.args
+      command     = exec.value.command
+    }
+  }
+}
+
 resource "kubernetes_deployment" "deploy_app" {
   wait_for_rollout = var.wait_for_rollout
 
@@ -40,7 +61,7 @@ resource "kubernetes_deployment" "deploy_app" {
         automount_service_account_token = var.service_account_token
 
         restart_policy = var.restart_policy
-        
+
         dynamic "image_pull_secrets" {
           for_each = var.image_pull_secrets
           content {
